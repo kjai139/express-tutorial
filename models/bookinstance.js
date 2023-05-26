@@ -21,7 +21,15 @@ BookInstanceSchema.virtual("url").get(function () {
   return `/catalog/bookinstance/${this._id}`;
 });
 BookInstanceSchema.virtual('due_back_formatted').get(function (){
-  return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED)
+  return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_FULL)
+})
+
+BookInstanceSchema.virtual('duebackForm').get(function () {
+  return DateTime.fromJSDate(this.due_back).toFormat('yyyy-MM-dd')
+})
+
+BookInstanceSchema.virtual('testDate').get(function(){
+  return this.due_back.toLocaleString('en-US', {timeZone: 'UTC'})
 })
 
 // Export model

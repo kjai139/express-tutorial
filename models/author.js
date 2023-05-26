@@ -42,5 +42,14 @@ AuthorSchema.virtual('dodFormatted').get(function () {
   
 })
 
+AuthorSchema.virtual('dobForm').get(function () {
+
+  let dateTimeObj = DateTime.fromJSDate(this.date_of_birth).toFormat('yyyy-MM-dd')
+
+  
+
+  return dateTimeObj
+})
+
 // Export model
 module.exports = mongoose.model("Author", AuthorSchema);
