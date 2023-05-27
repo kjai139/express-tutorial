@@ -8,10 +8,24 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const userCoolRouter = require('./routes/cool')
 const catalogRouter = require('./routes/catalog')
-
+const compression = require('compression')
 require('dotenv').config()
+const helmet = require('helmet')
+
 
 var app = express();
+const RateLimit = require('express-rate-limit')
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, //1 min
+  max:20
+})
+app.use(compression())
+app.use(limiter)
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"]
+  }
+}))
 
 //setup connection mongoose
 const mongoose = require('mongoose')
